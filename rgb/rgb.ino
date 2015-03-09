@@ -11,8 +11,9 @@ Use single digits pins (i.e: 1,2,{...},9);
 
 // Use pwm pins to drive LEDS (3,5,6,9)
 int pinR = 6, pinG = 5, pinB = 3, pinButton = 5;
-int time_delay = 20;
+int time_delay = 10;
 
+int valueR=0,valueG=0,valueB=0;
 void setup() {
   // put your setup code here, to run once:
   pinMode(pinR, OUTPUT);
@@ -48,33 +49,29 @@ void test() {
 }
 
 void fade(int pin, int value) {
-  //debug
-  Serial.print("\nlectura del pin= ");
-  Serial.print(analogRead(pin));
-  
-  int akt = analogRead(pinR) / 4; //almacena el valor actual del pin en el rango 0-255
-  
-  //debug
-  Serial.print("akt= ");
-  Serial.print(akt);
-  Serial.print("\tvalue");
-  Serial.println(value);
+
+  int akt;
+
+  if (pin == pinR ){
+    akt = valueR;
+    valueR=value;
+  }else if(pin == pinG){
+    akt = valueG;
+    valueG=value;
+  }else{
+    akt = valueB;
+    valueB=value;
+  }
 
   if (value > akt ) {
-    //debug
     Serial.print("value > akt");
     for (int i = akt; i < value; i++) {
-      //debug
-      Serial.print(i);
       analogWrite(pin, i);
       delay(time_delay);
     }
   } else {
-    //debug
     Serial.print("value < akt");
     for (int i = akt; i > value; i--) {
-      //debug
-      Serial.print(i);
       analogWrite(pin, i);
       delay(time_delay);
     }
