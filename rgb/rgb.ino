@@ -64,13 +64,11 @@ void fade(int pin, int value) {
   }
 
   if (value > akt ) {
-    Serial.print("value > akt");
     for (int i = akt; i < value; i++) {
       analogWrite(pin, i);
       delay(time_delay);
     }
   } else {
-    Serial.print("value < akt");
     for (int i = akt; i > value; i--) {
       analogWrite(pin, i);
       delay(time_delay);
@@ -113,6 +111,7 @@ void manageChar(int data) {
 
 int waitForInput() {
 
+ 
   int acum = 0;
 
   Serial.println("Introduce el valor del color (0-255)");
